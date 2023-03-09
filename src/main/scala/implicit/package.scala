@@ -16,13 +16,13 @@ package object `implicit` {
 
   implicit class ValidateStringKeyMap[T](map: Map[String, T]) {
     def isStringKeyMapValid: Boolean = isNestedStringKeyMapValidRecurse(map)
-    private def isNestedStringKeyMapValidRecurse[T](map: Map[String, T]): Boolean = {
+    private def isNestedStringKeyMapValidRecurse(map: Map[String, T]): Boolean = {
       if (map.isEmpty) false
       else if (map.values.headOption.exists(!_.isInstanceOf[Map[String, T]]))
         map.nonEmpty && map.keys.forall(_.trim.nonEmpty) && map.values.foldLeft(true)((acc, elem) => elem match {
           case x: String => acc && x.nonEmpty
           case x: Double => acc && x.greaterThanWithAcceptedError(0)
-          case _ => true
+          case _ => acc
         })
       // do recursive
       else
