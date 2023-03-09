@@ -1,0 +1,160 @@
+{
+	"info": {
+		"_postman_id": "d4c80f09-a360-4c93-9cd8-2a10200ad40f",
+		"name": "TinyAssignment",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create map",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "5483d38b-4cbd-4032-8b7e-2e5061effbd6"
+					},
+					{
+						"key": "cache-control",
+						"value": "no-cache"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"map\": [\n{\"A\": { \"B\": 100, \"C\": 30 }},\n{\"B\": { \"F\": 300}},\n{\"C\": { \"D\": 200}},\n{\"D\": { \"H\": 90, \"E\":80}},\n{\"E\": { \"H\": 30, \"G\":150, \"F\":50}},\n{\"F\": { \"G\":70}},\n{\"G\": { \"H\":50}}\n]\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/shortest-distance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shortest-distance"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Change path",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "1cf710d4-98fd-4d59-8690-bcde27e90271"
+					},
+					{
+						"key": "cache-control",
+						"value": "no-cache"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"A\": {\"B\": 60}}\n"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/shortest-distance/change-path",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shortest-distance",
+						"change-path"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add path",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "f9ec4f48-e9a2-4b55-8323-c6474d3b5ed3"
+					},
+					{
+						"key": "cache-control",
+						"value": "no-cache"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"map\": [{ \"A\": {\"I\": 70, \"J\":150} }]}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/shortest-distance/add-path",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shortest-distance",
+						"add-path"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Calculate distance",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					},
+					{
+						"key": "Postman-Token",
+						"value": "a834a67d-70b1-4c54-8d34-8d80b7eed0f7"
+					},
+					{
+						"key": "cache-control",
+						"value": "no-cache"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"start\":\"A\", \"end\":\"I\" }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/shortest-distance/calculate-distance",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"shortest-distance",
+						"calculate-distance"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
