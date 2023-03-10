@@ -1,12 +1,12 @@
 package com.tiny
 package dto.response
 
-import akka.http.scaladsl.model.StatusCode
-import akka.http.scaladsl.server.{Rejection, StandardRoute}
-import spray.json.{DefaultJsonProtocol, JsNull, JsObject, JsString, JsValue, JsonWriter, RootJsonWriter}
-import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport._
+import akka.http.scaladsl.model.StatusCode
+import akka.http.scaladsl.server.Directives._
+import akka.http.scaladsl.server.{Rejection, StandardRoute}
 import org.slf4j.Logger
+import spray.json.{DefaultJsonProtocol, JsNull, JsObject, JsString, JsonWriter, RootJsonWriter}
 
 import scala.util.Try
 
@@ -20,13 +20,10 @@ case class BaseResponse[T: JsonWriter](dataOption: Option[T], errorMessageOption
 object BaseResponse extends DefaultJsonProtocol {
   def getSuccessResponse[T: JsonWriter](data: T, statusCodeOption: Option[StatusCode] = None): BaseResponse[T] = BaseResponse(Some(data), None, statusCodeOption)
   def getErrorResponse[T: JsonWriter](errorMessage: String, statusCodeOption: Option[StatusCode] = None): BaseResponse[T] = BaseResponse(None, Some(errorMessage), statusCodeOption)
-  implicit def writer[T: JsonWriter]: RootJsonWriter[BaseResponse[T]] = new RootJsonWriter[BaseResponse[T]] {
-    override def write(obj: BaseResponse[T]): JsValue =
-      JsObject(
-        "data" -> obj.dataOption.map(implicitly[JsonWriter[T]].write(_)).getOrElse(JsNull),
-        "errorMessage" -> obj.errorMessageOption.map(JsString(_)).getOrElse(JsNull)
-      )
-  }
+  implicit def writer[T: JsonWriter]: RootJsonWriter[BaseResponse[T]] = (obj: BaseResponse[T]) => JsObject(
+    "data" -> obj.dataOption.map(implicitly[JsonWriter[T]].write(_)).getOrElse(JsNull),
+    "errorMessage" -> obj.errorMessageOption.map(JsString(_)).getOrElse(JsNull)
+  )
   def recoverWithErrorBaseResponse[T: JsonWriter](logger: Logger, errorMsgPrefix: String)(respWithPossibleError: => BaseResponse[T]): BaseResponse[T] = {
     def errorMsg(t: Throwable) = s"$errorMsgPrefix ${t.getMessage}"
     Try(respWithPossibleError).recover{ case t =>
