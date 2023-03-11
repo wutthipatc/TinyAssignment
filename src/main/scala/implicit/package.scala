@@ -20,11 +20,11 @@ package object `implicit` {
       if (map.isEmpty) false
       else if (map.values.headOption.exists(!_.isInstanceOf[Map[String, T]]))
         map.nonEmpty && map.keys.forall(_.trim.nonEmpty) && map.values.foldLeft(true)((acc, elem) => elem match {
-          case x: String => acc && x.nonEmpty
+          case x: String => acc && x.trim.nonEmpty
           case x: Double => acc && x.greaterThanWithAcceptedError(0)
           case _ => acc
         })
-      // do recursive
+      // do recursion
       else
         map.keys.forall(_.trim.nonEmpty) &&
           map.values.map(_.asInstanceOf[Map[String, T]]).map(isNestedStringKeyMapValidRecurse).reduce(_ && _)
